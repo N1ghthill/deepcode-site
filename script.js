@@ -1,6 +1,31 @@
 // DeepCode Site — Scripts
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Keep the public version badge aligned with the package users install.
+  const releaseBadge = document.querySelector('#release-badge');
+  const versionLabel = releaseBadge?.querySelector('[data-version-label]');
+
+  if (releaseBadge && versionLabel) {
+    const packageName = releaseBadge.dataset.package;
+
+    fetch(`https://registry.npmjs.org/${encodeURIComponent(packageName)}/latest`, {
+      headers: { Accept: 'application/json' },
+      cache: 'no-store'
+    })
+      .then(response => {
+        if (!response.ok) throw new Error('Unable to fetch package metadata');
+        return response.json();
+      })
+      .then(pkg => {
+        if (typeof pkg.version === 'string' && pkg.version.length > 0) {
+          versionLabel.textContent = `v${pkg.version} · npm latest`;
+        }
+      })
+      .catch(() => {
+        versionLabel.textContent = 'npm latest';
+      });
+  }
+
   // Copy to clipboard
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
