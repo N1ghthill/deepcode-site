@@ -256,7 +256,13 @@ img {
   display: flex;
   gap: 16px;
   justify-content: center;
-  margin-bottom: 42px;
+  margin-bottom: 18px;
+}
+
+.hero-install {
+  max-width: 440px;
+  margin: 0 auto 34px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.24);
 }
 
 .hero-terminal {
@@ -775,13 +781,13 @@ img {
   }
 
   .hero {
-    padding: 108px 0 28px;
+    padding: 98px 0 22px;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
   }
 
   .hero-actions .btn {
@@ -821,8 +827,29 @@ img {
     align-self: flex-end;
   }
 
+  .terminal-badge {
+    margin-bottom: 12px;
+  }
+
+  .hero-logo {
+    margin-bottom: 8px;
+  }
+
+  .hero-description {
+    margin-bottom: 28px;
+  }
+
+  .hero-install {
+    margin-bottom: 22px;
+  }
+
+  .hero-terminal pre {
+    padding: 14px 16px;
+  }
+
   .hero-terminal code {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
+    line-height: 1.6;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
   }

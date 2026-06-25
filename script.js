@@ -8,12 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (releaseBadge && versionLabel) {
     const packageName = releaseBadge.dataset.package;
 
-    fetch(`https://registry.npmjs.org/${encodeURIComponent(packageName)}/latest`, {
-      headers: { Accept: 'application/json' },
-      cache: 'no-store'
-    })
+    fetch('/api/package-version', { headers: { Accept: 'application/json' } })
       .then(response => {
-        if (!response.ok) throw new Error('Unable to fetch package metadata');
+        if (!response.ok) throw new Error('Unable to fetch package version');
         return response.json();
       })
       .then(pkg => {
@@ -21,8 +18,22 @@ document.addEventListener('DOMContentLoaded', () => {
           versionLabel.textContent = `v${pkg.version} · npm latest`;
         }
       })
-      .catch(() => {
-        versionLabel.textContent = 'npm latest';
+      .catch(async () => {
+        try {
+          const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(packageName)}/latest`, {
+            headers: { Accept: 'application/json' },
+            cache: 'no-store'
+          });
+
+          if (!response.ok) throw new Error('Unable to fetch package metadata');
+          const pkg = await response.json();
+
+          if (typeof pkg.version === 'string' && pkg.version.length > 0) {
+            versionLabel.textContent = `v${pkg.version} · npm latest`;
+          }
+        } catch {
+          versionLabel.textContent = 'npm latest';
+        }
       });
   }
 
