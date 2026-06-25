@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepCode — Terminal-first AI coding agent</title>
+  <meta name="description" content="DeepCode is a terminal-first AI coding agent that runs locally with multi-provider LLM support, permission-aware tool execution, and an Ink TUI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/favicon_deepcode.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <img src="assets/brand_mark.png" alt="" class="brand-mark">
+        <span class="brand-word">DeepCode</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#providers">Providers</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#safety">Safety</a></li>
+        <li><a href="#install">Install</a></li>
+      </ul>
+      <a href="https://github.com/N1ghthill/deepcode" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="terminal-badge">v0.1.0 · MIT License</div>
+      <div class="hero-logo">
+        <img src="assets/logo_deepcode_hero.png" alt="DeepCode" class="hero-logo-img">
+      </div>
+      <h1 class="sr-only">DeepCode</h1>
+      <p class="hero-subtitle">Terminal-first AI coding agent — local, permission-aware, and multi-provider.</p>
+      <p class="hero-description">DeepCode operates locally with a permission model you control — read, write, shell, and dangerous operations each have configurable approval policies. Works with Anthropic, OpenAI, DeepSeek, Groq, Ollama, OpenRouter, and MCP.</p>
+      <div class="hero-actions">
+        <a href="#install" class="btn btn-primary">Get Started</a>
+        <a href="https://github.com/N1ghthill/deepcode" class="btn btn-secondary" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <div class="hero-terminal" aria-label="DeepCode terminal preview">
+        <div class="terminal-topbar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">deepcode ~/repo</span>
+        </div>
+        <pre><code><span class="prompt">$</span> deepcode run "ship auth" --yes
+<span class="log-muted">reading workspace, tests, and git diff</span>
+<span class="log-ok">✓</span> plan created with 4 permission-gated steps
+<span class="log-ok">✓</span> patched 3 files and updated focused tests
+<span class="log-muted">approval required: shell:test</span>
+<span class="log-ok">✓</span> npm test -- auth/session.spec.ts</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="container">
+      <h2 class="section-title">Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">TUI</div>
+          <h3>Interactive TUI</h3>
+          <p>Ink-based terminal UI with real-time streaming, diff previews, approval flows, and Vim keybindings.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">RUN</div>
+          <h3>Non-interactive mode</h3>
+          <p><code>deepcode run</code> for scripting and CI pipelines — fully automated task execution.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">LLM</div>
+          <h3>Multi-provider LLM</h3>
+          <p>Anthropic, OpenAI, DeepSeek, Groq, Ollama, OpenRouter, OpenCode — with automatic failover and per-mode routing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">TLS</div>
+          <h3>Tool System</h3>
+          <p>Filesystem read/write, shell, ripgrep search, git, lint, test runners, LSP symbols — all permission-gated.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">MCP</div>
+          <h3>MCP Support</h3>
+          <p>Connect any Model Context Protocol server; tools appear automatically in the agent with <code>server__</code> prefix.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">GIT</div>
+          <h3>GitHub Integration</h3>
+          <p>Authenticate, browse issues, manage pull requests, and run AI code review on any PR from your terminal.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">CTX</div>
+          <h3>Context Management</h3>
+          <p>Auto-summarizes conversation history when approaching the model's context limit. Configurable token budgets with hard stops.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">SEC</div>
+          <h3>Safety Model</h3>
+          <p>Path allowlist/blacklist, per-operation permission levels, approval gateway, audit logging, and secret redaction.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">INT</div>
+          <h3>Intent Classification</h3>
+          <p>Answers greetings, trivial questions, and project discovery without calling an LLM — saving tokens and latency.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="providers" class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">Supported Providers</h2>
+      <div class="providers-grid">
+        <div class="provider-card">
+          <div class="provider-name">Anthropic</div>
+          <div class="provider-id">anthropic</div>
+          <div class="provider-models">Claude 3.x / 4.x family</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">OpenAI</div>
+          <div class="provider-id">openai</div>
+          <div class="provider-models">GPT-4o, o3, o4-mini</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">DeepSeek</div>
+          <div class="provider-id">deepseek</div>
+          <div class="provider-models">deepseek-chat, deepseek-reasoner</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">Groq</div>
+          <div class="provider-id">groq</div>
+          <div class="provider-models">Fast inference, Llama / Mixtral</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">Ollama</div>
+          <div class="provider-id">ollama</div>
+          <div class="provider-models">Local models, no API key required</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">OpenRouter</div>
+          <div class="provider-id">openrouter</div>
+          <div class="provider-models">Unified access to 200+ models</div>
+        </div>
+        <div class="provider-card">
+          <div class="provider-name">OpenCode</div>
+          <div class="provider-id">opencode</div>
+          <div class="provider-models">opencode-go/ model prefix</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="commands" class="section">
+    <div class="container">
+      <h2 class="section-title">Core Commands</h2>
+      <div class="commands-list">
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode</div>
+          <div class="command-desc">Launch interactive TUI</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode chat</div>
+          <div class="command-desc">Start a chat session</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode run "fix the failing tests" --yes</div>
+          <div class="command-desc">Non-interactive task execution</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode config show --effective</div>
+          <div class="command-desc">View effective configuration</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode doctor</div>
+          <div class="command-desc">Check installation health</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode update</div>
+          <div class="command-desc">Check for updates</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode github login</div>
+          <div class="command-desc">Authenticate with GitHub</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode github review 42</div>
+          <div class="command-desc">AI code review on a PR</div>
+        </div>
+        <div class="command-item">
+          <div class="command-line"><span class="prompt">$</span> deepcode subagents run --task "audit auth" --concurrency 2 --yes</div>
+          <div class="command-desc">Run parallel subagents</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="safety" class="section section-dark">
+    <div class="container">
+      <h2 class="section-title">Safety Model</h2>
+      <p class="section-desc">DeepCode acts on a real local repository, so safety is a first-class runtime concern.</p>
+      <div class="safety-grid">
+        <div class="safety-item">
+          <div class="safety-icon">FS</div>
+          <div class="safety-content">
+            <h3>Path Control</h3>
+            <p>Allowlist and blacklist enforcement for filesystem access.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">ACL</div>
+          <div class="safety-content">
+            <h3>Permission Levels</h3>
+            <p><code>read</code>, <code>write</code>, <code>gitLocal</code>, <code>shell</code>, <code>dangerous</code> — each with configurable approval policy.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">OK</div>
+          <div class="safety-content">
+            <h3>Approval Gateway</h3>
+            <p>Sensitive operations require approval with diff previews before execution.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">LOG</div>
+          <div class="safety-content">
+            <h3>Audit Logging</h3>
+            <p>All tool calls are logged for review and debugging.</p>
+          </div>
+        </div>
+        <div class="safety-item">
+          <div class="safety-icon">KEY</div>
+          <div class="safety-content">
+            <h3>Secret Redaction</h3>
+            <p>Known secrets are automatically redacted from logs and agent output.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" class="section">
+    <div class="container">
+      <h2 class="section-title">Get Started</h2>
+      <div class="install-steps">
+        <div class="install-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Install</h3>
+            <p>Requires Node.js 22 or newer.</p>
+            <div class="code-block">
+              <code>npm install -g deepcode-ai</code>
+              <button class="copy-btn" data-copy="npm install -g deepcode-ai">Copy</button>
+            </div>
+            <p class="or">or</p>
+            <div class="code-block">
+              <code>pnpm add -g deepcode-ai</code>
+              <button class="copy-btn" data-copy="pnpm add -g deepcode-ai">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Configure</h3>
+            <div class="code-block">
+              <code>deepcode init<br>deepcode config set defaultProvider deepseek<br>deepcode config set providers.deepseek.apiKey "sk-..."</code>
+              <button class="copy-btn" data-copy="deepcode init\ndeepcode config set defaultProvider deepseek\ndeepcode config set providers.deepseek.apiKey \"sk-...\"">Copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Run</h3>
+            <div class="code-block">
+              <code>deepcode doctor<br>deepcode</code>
+              <button class="copy-btn" data-copy="deepcode doctor\ndeepcode">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/brand_mark.png" alt="" class="footer-mark">
+          <span class="footer-word">DeepCode</span>
+        </div>
+        <p class="footer-desc">Terminal-first AI coding agent — local, permission-aware, and multi-provider.</p>
+        <div class="footer-links">
+          <a href="https://github.com/N1ghthill/deepcode" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/N1ghthill/deepcode/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+          <a href="https://github.com/N1ghthill/deepcode/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+        </div>
+        <p class="footer-copy">Built with ❤️ by the DeepCode community</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
